@@ -1,10 +1,10 @@
 package com.taskmanager.service;
 
-import com.taskmanager.dto.TaskCreateRequest;
-import com.taskmanager.dto.TaskResponse;
-import com.taskmanager.dto.TaskUpdateRequest;
-import com.taskmanager.model.Priority;
-import com.taskmanager.model.TaskStatus;
+import com.taskmanager.dto.request.TaskCreateRequest;
+import com.taskmanager.dto.request.TaskUpdateRequest;
+import com.taskmanager.dto.response.TaskResponse;
+import com.taskmanager.entity.Priority;
+import com.taskmanager.entity.TaskStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

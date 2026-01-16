@@ -1,11 +1,11 @@
 package com.taskmanager.controller;
 
-import com.taskmanager.dto.ApiResponse;
-import com.taskmanager.dto.TaskCreateRequest;
-import com.taskmanager.dto.TaskResponse;
-import com.taskmanager.dto.TaskUpdateRequest;
-import com.taskmanager.enums.Priority;
-import com.taskmanager.enums.TaskStatus;
+import com.taskmanager.dto.request.TaskCreateRequest;
+import com.taskmanager.dto.request.TaskUpdateRequest;
+import com.taskmanager.dto.response.TaskResponse;
+import com.taskmanager.dto.response.ApiResponse;
+import com.taskmanager.entity.TaskStatus;
+import com.taskmanager.entity.Priority;
 import com.taskmanager.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -42,7 +42,7 @@ public class TaskController {
         log.info("Creating new task: {}", request);
         TaskResponse taskResponse = taskService.createTask(request);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success(taskResponse, "Task created successfully"));
+                .body(ApiResponse.success("Task created successfully", taskResponse));
     }
 
     @GetMapping
@@ -66,7 +66,7 @@ public class TaskController {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
         
         Page<TaskResponse> tasks = taskService.getTasks(status, priority, assignedToUserId, search, pageable);
-        return ResponseEntity.ok(ApiResponse.success(tasks, "Tasks retrieved successfully"));
+        return ResponseEntity.ok(ApiResponse.success("Tasks retrieved successfully", tasks));
     }
 
     @GetMapping("/{id}")
@@ -79,7 +79,7 @@ public class TaskController {
             @Parameter(description = "Task ID") @PathVariable Long id) {
         log.info("Getting task by id: {}", id);
         TaskResponse taskResponse = taskService.getTaskById(id);
-        return ResponseEntity.ok(ApiResponse.success(taskResponse, "Task retrieved successfully"));
+        return ResponseEntity.ok(ApiResponse.success("Task retrieved successfully", taskResponse));
     }
 
     @PutMapping("/{id}")
@@ -94,7 +94,7 @@ public class TaskController {
             @Valid @RequestBody TaskUpdateRequest request) {
         log.info("Updating task with id: {}", id);
         TaskResponse taskResponse = taskService.updateTask(id, request);
-        return ResponseEntity.ok(ApiResponse.success(taskResponse, "Task updated successfully"));
+        return ResponseEntity.ok(ApiResponse.success("Task updated successfully", taskResponse));
     }
 
     @DeleteMapping("/{id}")
@@ -121,7 +121,7 @@ public class TaskController {
             @Parameter(description = "New task status") @RequestParam TaskStatus status) {
         log.info("Updating task status for id: {} to status: {}", id, status);
         TaskResponse taskResponse = taskService.updateTaskStatus(id, status);
-        return ResponseEntity.ok(ApiResponse.success(taskResponse, "Task status updated successfully"));
+        return ResponseEntity.ok(ApiResponse.success("Task status updated successfully", taskResponse));
     }
 
     @GetMapping("/user/{userId}")
@@ -141,6 +141,6 @@ public class TaskController {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortBy));
         
         Page<TaskResponse> tasks = taskService.getUserTasks(userId, pageable);
-        return ResponseEntity.ok(ApiResponse.success(tasks, "User tasks retrieved successfully"));
+        return ResponseEntity.ok(ApiResponse.success("User tasks retrieved successfully", tasks));
     }
 }

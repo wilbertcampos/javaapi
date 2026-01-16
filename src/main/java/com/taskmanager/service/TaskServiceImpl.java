@@ -1,12 +1,12 @@
 package com.taskmanager.service;
 
-import com.taskmanager.dto.TaskCreateRequest;
-import com.taskmanager.dto.TaskResponse;
-import com.taskmanager.dto.TaskUpdateRequest;
+import com.taskmanager.dto.request.TaskCreateRequest;
+import com.taskmanager.dto.request.TaskUpdateRequest;
+import com.taskmanager.dto.response.TaskResponse;
 import com.taskmanager.entity.Task;
 import com.taskmanager.entity.User;
-import com.taskmanager.enums.Priority;
-import com.taskmanager.enums.TaskStatus;
+import com.taskmanager.entity.Priority;
+import com.taskmanager.entity.TaskStatus;
 import com.taskmanager.exception.ResourceNotFoundException;
 import com.taskmanager.exception.UnauthorizedException;
 import com.taskmanager.mapper.TaskMapper;
@@ -52,7 +52,7 @@ public class TaskServiceImpl implements TaskService {
             task.setAssignedTo(assignedUser);
             
             // Send async email notification
-            emailService.sendTaskAssignedEmail(assignedUser.getEmail(), task.getTitle());
+            emailService.sendTaskAssignmentEmail(assignedUser.getEmail(), task.getTitle(), currentUserEmail);
         }
         
         Task savedTask = taskRepository.save(task);
@@ -97,7 +97,7 @@ public class TaskServiceImpl implements TaskService {
         if (request.getStatus() != null && request.getStatus() == TaskStatus.DONE && oldStatus != TaskStatus.DONE) {
             task.setCompletedAt(LocalDateTime.now());
             if (task.getAssignedTo() != null) {
-                emailService.sendTaskCompletedEmail(task.getAssignedTo().getEmail(), task.getTitle());
+                emailService.sendTaskCompletionEmail(task.getAssignedTo().getEmail(), task.getTitle());
             }
         }
         
@@ -146,7 +146,7 @@ public class TaskServiceImpl implements TaskService {
         if (status == TaskStatus.DONE && oldStatus != TaskStatus.DONE) {
             task.setCompletedAt(LocalDateTime.now());
             if (task.getAssignedTo() != null) {
-                emailService.sendTaskCompletedEmail(task.getAssignedTo().getEmail(), task.getTitle());
+                emailService.sendTaskCompletionEmail(task.getAssignedTo().getEmail(), task.getTitle());
             }
         }
         

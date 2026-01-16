@@ -2,7 +2,7 @@ package com.taskmanager.config;
 
 import com.taskmanager.security.JwtAuthenticationEntryPoint;
 import com.taskmanager.security.JwtAuthenticationFilter;
-import com.taskmanager.service.CustomUserDetailsService;
+import com.taskmanager.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

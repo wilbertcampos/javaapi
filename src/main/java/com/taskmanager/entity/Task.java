@@ -77,5 +77,5 @@ public class Task {
 
     @Column(name = "deleted", nullable = false)
     @Builder.Default
-    private Boolean deleted = false;
+    private boolean deleted = false;
 }

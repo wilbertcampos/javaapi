@@ -1,7 +1,7 @@
 package com.taskmanager.controller;
 
-import com.taskmanager.dto.ApiResponse;
-import com.taskmanager.dto.UserResponse;
+import com.taskmanager.dto.response.ApiResponse;
+import com.taskmanager.dto.response.UserResponse;
 import com.taskmanager.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
