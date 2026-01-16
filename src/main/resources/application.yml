@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: task-manager-api
+  profiles:
+    active: dev
+
+server:
+  port: 8080
+
+jwt:
+  secret: your-secret-key-change-this-in-production-min-256-bits
+  expiration: 900000
+  refresh-expiration: 604800000
