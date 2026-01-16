@@ -323,7 +323,7 @@ The OpenAPI 3.0 specification is available at:
 
 #### Task Filtering (`GET /api/v1/tasks`)
 
-- `status` - Filter by status: TODO, IN_PROGRESS, DONE, CANCELLED
+- `status` - Filter by status: TODO, IN_PROGRESS, DONE
 - `priority` - Filter by priority: LOW, MEDIUM, HIGH, URGENT
 - `assignedToUserId` - Filter by assigned user ID
 - `search` - Search in title and description
@@ -342,11 +342,9 @@ The OpenAPI 3.0 specification is available at:
 curl -X POST http://localhost:8080/api/v1/auth/register \
   -H "Content-Type: application/json" \
   -d '{
-    "username": "john_doe",
     "email": "john.doe@example.com",
     "password": "SecurePass123!",
-    "firstName": "John",
-    "lastName": "Doe"
+    "fullName": "John Doe"
   }'
 ```
 
@@ -400,7 +398,6 @@ curl -X POST http://localhost:8080/api/v1/tasks \
   -d '{
     "title": "Implement user authentication",
     "description": "Add JWT-based authentication to the API",
-    "status": "TODO",
     "priority": "HIGH",
     "dueDate": "2024-02-01T00:00:00",
     "assignedToUserId": 1
@@ -420,6 +417,7 @@ curl -X POST http://localhost:8080/api/v1/tasks \
     "priority": "HIGH",
     "dueDate": "2024-02-01T00:00:00",
     "assignedToUserId": 1,
+    "createdBy": null,
     "createdAt": "2024-01-16T10:40:00",
     "updatedAt": "2024-01-16T10:40:00"
   },
@@ -767,11 +765,9 @@ GRANT ALL PRIVILEGES ON DATABASE taskmanager TO admin;
 
 #### Users Table
 - `id` (BIGINT, Primary Key)
-- `username` (VARCHAR, Unique)
 - `email` (VARCHAR, Unique)
 - `password` (VARCHAR, BCrypt hashed)
-- `first_name` (VARCHAR)
-- `last_name` (VARCHAR)
+- `full_name` (VARCHAR)
 - `role` (VARCHAR: USER, ADMIN)
 - `created_at` (TIMESTAMP)
 - `updated_at` (TIMESTAMP)
@@ -780,7 +776,7 @@ GRANT ALL PRIVILEGES ON DATABASE taskmanager TO admin;
 - `id` (BIGINT, Primary Key)
 - `title` (VARCHAR)
 - `description` (TEXT)
-- `status` (VARCHAR: TODO, IN_PROGRESS, DONE, CANCELLED)
+- `status` (VARCHAR: TODO, IN_PROGRESS, DONE)
 - `priority` (VARCHAR: LOW, MEDIUM, HIGH, URGENT)
 - `due_date` (TIMESTAMP)
 - `assigned_to_user_id` (BIGINT, Foreign Key)
