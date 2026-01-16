@@ -1,6 +1,6 @@
 package com.taskmanager.service;
 
-import com.taskmanager.dto.UserResponse;
+import com.taskmanager.dto.response.UserResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
